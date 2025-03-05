@@ -1,16 +1,12 @@
 <template>
-    <div
-        class="artifact-item"
+    <img
+        :src="artifact.imageUrl"
+        alt="Artifact Image"
+        class="w-full h-auto object-cover artifact-item"
         draggable="true"
         @dragstart="onDragStart"
         @click="viewArtifact"
-    >
-        <img
-            :src="artifact.imageUrl"
-            alt="Artifact Image"
-            class="w-full h-auto"
-        />
-    </div>
+    />
 </template>
 
 <script setup lang="ts">

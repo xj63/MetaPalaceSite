@@ -6,7 +6,7 @@
         </div>
 
         <!-- 右侧区域 -->
-        <div class="flex-1 p-4">
+        <div class="flex-1 p-4 h-screen overflow-y-auto">
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 <ArtifactItem
                     v-for="artifact in artifacts"

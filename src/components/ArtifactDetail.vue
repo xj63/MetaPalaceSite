@@ -19,7 +19,7 @@ import { defineProps } from "vue";
 
 defineProps({
     artifact: {
-        type: Object,
+        type: Object as () => Record<string, any> | null,
         default: null,
     },
 });
