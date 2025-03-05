@@ -7,33 +7,57 @@
 
         <!-- 右侧区域 -->
         <div class="flex-1 p-4 h-screen overflow-y-auto">
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                <ArtifactItem
-                    v-for="artifact in artifacts"
-                    :key="artifact.id"
-                    :artifact="artifact"
-                    @dragstart="onDragStart"
-                    @click="viewArtifact"
-                />
+            <wc-waterfall :gap="4" :cols="cols">
+                <template v-for="artifact in artifacts" :key="artifact.id">
+                    <ArtifactItem
+                        :artifact="artifact"
+                        @dragstart="onDragStart"
+                        @click="viewArtifact"
+                    />
+                </template>
                 <UploadButton @upload="handleUpload" />
-            </div>
+            </wc-waterfall>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import { useArtifactStore } from "../stores";
 import ArtifactDetail from "@/components/ArtifactDetail.vue";
 import ArtifactItem from "@/components/ArtifactItem.vue";
 import UploadButton from "@/components/UploadButton.vue";
 import { useRouter } from "vue-router";
 import type { Artifact } from "../stores";
+import "wc-waterfall";
 
 const artifactStore = useArtifactStore();
 const artifacts = computed(() => artifactStore.artifacts);
 const currentArtifact = computed(() => artifactStore.currentArtifact);
 const router = useRouter();
+
+const cols = ref(3);
+
+const updateCols = () => {
+    if (window.innerWidth >= 1280) {
+        cols.value = 4;
+    } else if (window.innerWidth >= 768) {
+        cols.value = 3;
+    } else if (window.innerWidth >= 400) {
+        cols.value = 2;
+    } else {
+        cols.value = 1;
+    }
+};
+
+onMounted(() => {
+    updateCols();
+    window.addEventListener("resize", updateCols);
+});
+
+onUnmounted(() => {
+    window.removeEventListener("resize", updateCols);
+});
 
 const onDragStart = (artifact: Artifact) => {
     artifactStore.setCurrentArtifact(artifact);
