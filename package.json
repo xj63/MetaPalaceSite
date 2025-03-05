@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^12.8.1",
+    "axios": "^1.8.1",
     "gsap": "^3.12.7",
     "pinia": "^3.0.1",
     "three": "^0.174.0",
