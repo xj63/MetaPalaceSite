@@ -8,7 +8,10 @@
             class="hidden"
             ref="fileInput"
         />
-        <button @click="triggerFileInput" class="text-gray-500">
+        <button
+            @click="triggerFileInput"
+            class="text-gray-500 dark:text-gray-300"
+        >
             上传文物图片
         </button>
     </div>

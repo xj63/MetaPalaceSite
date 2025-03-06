@@ -1,14 +1,14 @@
 <template>
-    <div class="flex min-h-screen">
+    <div class="flex min-h-screen dark:text-gray-200">
         <!-- 左侧区域 -->
         <div
-            class="w-1/3 hidden lg:block bg-gray-100 p-4 h-screen overflow-y-auto"
+            class="w-1/3 hidden lg:block bg-gray-100 dark:bg-gray-800 p-4 h-screen overflow-y-auto"
         >
             <ArtifactDetail :artifact="currentArtifact" />
         </div>
 
         <!-- 右侧区域 -->
-        <div class="flex-1 p-4 h-screen overflow-y-auto">
+        <div class="flex-1 p-4 h-screen overflow-y-auto dark:bg-gray-900">
             <wc-waterfall :gap="4" :cols="cols">
                 <template v-for="artifact in artifacts" :key="artifact.id">
                     <ArtifactItem

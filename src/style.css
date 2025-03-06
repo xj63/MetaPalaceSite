@@ -9,3 +9,9 @@
 .page-leave-to {
     opacity: 0;
 }
+
+@layer base {
+    html {
+        @apply dark:bg-black;
+    }
+}
