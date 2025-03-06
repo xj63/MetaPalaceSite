@@ -1,5 +1,3 @@
-# Vue 3 + TypeScript + Vite
+# MetaPalace
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
-
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+MetaPalace 是一个基于 Vue.js 的单页应用（SPA），旨在通过 AI 技术创建文物的 3D 模型，并提供文物信息的讲解。这个项目类似于一个数字博物馆，用户可以通过上传文物图片并查看其 3D 模型和详细信息。
