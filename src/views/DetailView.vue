@@ -8,7 +8,7 @@
             加载中...
         </div>
         <div
-            class="absolute bottom-0 left-0 right-0 p-4 bg-black bg-opacity-50 text-white"
+            class="absolute bottom-0 left-0 right-0 p-4 bg-black/30 backdrop-blur-sm text-white"
         >
             <h2 class="text-2xl font-bold">{{ artifact?.name }}</h2>
             <p>{{ artifact?.description }}</p>
@@ -18,14 +18,13 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import { useArtifactStore } from "@/stores";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 const route = useRoute();
-const router = useRouter();
 const artifactStore = useArtifactStore();
 const artifactId = route.params.id as string;
 const artifact = computed(() =>
@@ -36,14 +35,6 @@ const canvasContainer = ref<HTMLDivElement | null>(null);
 const loading = ref(true);
 
 onMounted(() => {
-    if (!artifact.value) {
-        alert("找不到该文物");
-        setTimeout(() => {
-            router.push("/select");
-        }, 2000);
-        return;
-    }
-
     let scene: THREE.Scene,
         camera: THREE.PerspectiveCamera,
         renderer: THREE.WebGLRenderer,
@@ -150,7 +141,7 @@ onMounted(() => {
         controls.enableDamping = true; // 启用阻尼效果
         controls.dampingFactor = 0.25;
         controls.screenSpacePanning = false;
-        controls.minDistance = 1;
+        controls.minDistance = 0.5;
         controls.maxDistance = 20;
         controls.maxPolarAngle = Math.PI / 2;
 
