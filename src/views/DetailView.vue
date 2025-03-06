@@ -18,13 +18,14 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useArtifactStore } from "@/stores";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 const route = useRoute();
+const router = useRouter();
 const artifactStore = useArtifactStore();
 const artifactId = route.params.id as string;
 const artifact = computed(() =>
@@ -38,7 +39,6 @@ onMounted(() => {
     let scene: THREE.Scene,
         camera: THREE.PerspectiveCamera,
         renderer: THREE.WebGLRenderer,
-        model: THREE.Group,
         controls: OrbitControls;
 
     const init = () => {
@@ -53,49 +53,31 @@ onMounted(() => {
         renderer.setSize(window.innerWidth, window.innerHeight);
         canvasContainer.value?.appendChild(renderer.domElement);
 
-        // 添加环境光
+        // 添加环境光和多个强光源
         const ambientLight = new THREE.AmbientLight(0xffffff, 1);
         scene.add(ambientLight);
-
-        // 添加多个强光源
-        const directionalLight1 = new THREE.DirectionalLight(0xffffff, 2);
-        directionalLight1.position.set(5, 5, 5);
-        scene.add(directionalLight1);
-
-        const directionalLight2 = new THREE.DirectionalLight(0xffffff, 2);
-        directionalLight2.position.set(-5, 5, 5);
-        scene.add(directionalLight2);
-
-        const directionalLight3 = new THREE.DirectionalLight(0xffffff, 2);
-        directionalLight3.position.set(5, -5, 5);
-        scene.add(directionalLight3);
-
-        const directionalLight4 = new THREE.DirectionalLight(0xffffff, 2);
-        directionalLight4.position.set(5, 5, -5);
-        scene.add(directionalLight4);
-
-        const directionalLight5 = new THREE.DirectionalLight(0xffffff, 2);
-        directionalLight5.position.set(-5, -5, 5);
-        scene.add(directionalLight5);
-
-        const directionalLight6 = new THREE.DirectionalLight(0xffffff, 2);
-        directionalLight6.position.set(-5, 5, -5);
-        scene.add(directionalLight6);
-
-        const directionalLight7 = new THREE.DirectionalLight(0xffffff, 2);
-        directionalLight7.position.set(5, -5, -5);
-        scene.add(directionalLight7);
-
-        const directionalLight8 = new THREE.DirectionalLight(0xffffff, 2);
-        directionalLight8.position.set(-5, -5, -5);
-        scene.add(directionalLight8);
+        const lightPositions: [number, number, number][] = [
+            [5, 5, 5],
+            [-5, 5, 5],
+            [5, -5, 5],
+            [5, 5, -5],
+            [-5, -5, 5],
+            [-5, 5, -5],
+            [5, -5, -5],
+            [-5, -5, -5],
+        ];
+        lightPositions.forEach((pos) => {
+            const light = new THREE.DirectionalLight(0xffffff, 2);
+            light.position.set(...pos);
+            scene.add(light);
+        });
 
         // 加载模型
         const loader = new GLTFLoader();
         loader.load(
             `https://assets.metapalace.xj63.fun/glb/${artifactId}.glb`,
             (gltf) => {
-                model = gltf.scene;
+                const model = gltf.scene;
                 scene.add(model);
                 loading.value = false;
 
@@ -133,6 +115,11 @@ onMounted(() => {
                 }
 
                 animate();
+            },
+            undefined,
+            () => {
+                // 当加载失败时返回上一页面
+                router.back();
             },
         );
 
