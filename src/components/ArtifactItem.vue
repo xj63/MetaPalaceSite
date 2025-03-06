@@ -4,6 +4,7 @@
         alt="Artifact Image"
         class="w-full h-auto object-cover artifact-item"
         draggable="true"
+        loading="lazy"
         @dragstart="onDragStart"
         @click="viewArtifact"
     />
