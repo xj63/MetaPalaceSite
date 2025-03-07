@@ -1,5 +1,9 @@
 <template>
-    <div class="relative min-h-screen bg-black">
+    <div
+        class="relative min-h-screen bg-black"
+        @touchend="handleTouchStart"
+        @mousedown="handleTouchStart"
+    >
         <div ref="canvasContainer" class="absolute inset-0"></div>
         <div
             v-if="loading"
@@ -47,14 +51,18 @@ const loading = ref(true);
 const aiVoiceButton = ref<InstanceType<typeof AIVoiceButton> | null>(null);
 let model: THREE.Group; // 定义 model 变量
 let animationFrameId: number;
+const currentRotation = ref(0); // 保存当前旋转角度
 
 const rotateModel = () => {
+    if (!model) return; // 如果 model 未定义，则直接返回
+
     let start = 0;
+    const initialRotation = currentRotation.value; // 获取起始角度
 
     const animate = (timestamp: number) => {
         if (!start) start = timestamp;
         const progress = timestamp - start;
-        model.rotation.y = (progress / 60000) * Math.PI * 2; // 60秒旋转一圈
+        model.rotation.y = initialRotation + (progress / 60000) * Math.PI * 2; // 60秒旋转一圈
 
         animationFrameId = requestAnimationFrame(animate);
     };
@@ -64,6 +72,13 @@ const rotateModel = () => {
 
 const stopRotateModel = () => {
     cancelAnimationFrame(animationFrameId);
+    if (model) {
+        currentRotation.value = model.rotation.y; // 保存当前旋转角度
+    }
+};
+
+const handleTouchStart = () => {
+    stopRotateModel();
 };
 
 onMounted(() => {
@@ -95,7 +110,7 @@ onMounted(() => {
             [-5, -5, 5],
             [-5, 5, -5],
             [5, -5, -5],
-            [-5, -5, -5],
+            [-5, -5, 5],
         ];
         lightPositions.forEach((pos) => {
             const light = new THREE.DirectionalLight(0xffffff, 2);
@@ -146,6 +161,8 @@ onMounted(() => {
                 }
 
                 animate();
+                // 初始化currentRotation
+                currentRotation.value = model.rotation.y;
             },
             undefined,
             () => {
@@ -164,7 +181,7 @@ onMounted(() => {
         controls.maxPolarAngle = Math.PI / 2;
 
         // 监听窗口大小变化
-        window.addEventListener("resize", onWindowResize, false);
+        window.addEventListener("resize", onWindowResize);
     };
 
     const animate = () => {
@@ -180,6 +197,12 @@ onMounted(() => {
     };
 
     init();
+    // 加载完成后才开始旋转
+    onMounted(() => {
+        if (model) {
+            rotateModel();
+        }
+    });
 
     onUnmounted(() => {
         stopRotateModel();
