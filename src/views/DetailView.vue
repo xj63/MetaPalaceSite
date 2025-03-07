@@ -13,6 +13,15 @@
             <h2 class="text-2xl font-bold">{{ artifact?.name }}</h2>
             <p>{{ artifact?.description }}</p>
         </div>
+
+        <!-- AI 语音交互按钮 -->
+        <div class="absolute bottom-4 right-4">
+            <AIVoiceButton
+                :description="artifact?.description || ''"
+                :rotateModel="rotateModel"
+                ref="aiVoiceButton"
+            />
+        </div>
     </div>
 </template>
 
@@ -23,6 +32,7 @@ import { useArtifactStore } from "@/stores";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import AIVoiceButton from "@/components/AIVoiceButton.vue"; // Import the AIVoiceButton component
 
 const route = useRoute();
 const router = useRouter();
@@ -34,6 +44,27 @@ const artifact = computed(() =>
 
 const canvasContainer = ref<HTMLDivElement | null>(null);
 const loading = ref(true);
+const aiVoiceButton = ref<InstanceType<typeof AIVoiceButton> | null>(null);
+let model: THREE.Group; // 定义 model 变量
+let animationFrameId: number;
+
+const rotateModel = () => {
+    let start = 0;
+
+    const animate = (timestamp: number) => {
+        if (!start) start = timestamp;
+        const progress = timestamp - start;
+        model.rotation.y = (progress / 60000) * Math.PI * 2; // 60秒旋转一圈
+
+        animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animationFrameId = requestAnimationFrame(animate);
+};
+
+const stopRotateModel = () => {
+    cancelAnimationFrame(animationFrameId);
+};
 
 onMounted(() => {
     let scene: THREE.Scene,
@@ -77,7 +108,7 @@ onMounted(() => {
         loader.load(
             `https://assets.metapalace.xj63.fun/glb/${artifactId}.glb`,
             (gltf) => {
-                const model = gltf.scene;
+                model = gltf.scene; // 保存模型引用
                 scene.add(model);
                 loading.value = false;
 
@@ -151,6 +182,7 @@ onMounted(() => {
     init();
 
     onUnmounted(() => {
+        stopRotateModel();
         window.removeEventListener("resize", onWindowResize);
         if (canvasContainer.value) {
             canvasContainer.value.removeChild(renderer.domElement);

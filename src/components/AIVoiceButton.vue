@@ -1,0 +1,84 @@
+<template>
+    <button
+        @click="handleClick"
+        :disabled="isSpeaking"
+        :class="[
+            'relative',
+            'bg-gradient-to-r',
+            'from-blue-500',
+            'to-purple-500',
+            'text-white',
+            'font-bold',
+            'py-2',
+            'px-4',
+            'rounded-full',
+            'shadow-lg',
+            'hover:from-blue-700',
+            'hover:to-purple-700',
+            'focus:outline-none',
+            'focus:ring-2',
+            'focus:ring-blue-400',
+            'transition-all',
+            'duration-300',
+            'transform',
+            'hover:scale-110',
+            isSpeaking ? 'opacity-75 cursor-not-allowed' : '',
+        ]"
+    >
+        <span v-if="!isSpeaking">AI</span>
+        <span v-else>
+            {{ statusText }}
+            <span
+                class="absolute -top-1 left-1/2 -translate-x-1/2 text-xs text-gray-200 animate-pulse"
+            >
+                ...
+            </span>
+        </span>
+
+        <!-- TTS Player Component -->
+        <TTSPlayer
+            ref="ttsPlayer"
+            :text="description"
+            :autoplay="false"
+            @ended="onTTSEnded"
+        />
+    </button>
+</template>
+
+<script setup lang="ts">
+import { ref } from "vue";
+import TTSPlayer from "@/components/TTSPlayer.vue";
+
+const props = defineProps({
+    description: {
+        type: String,
+        required: true,
+    },
+    rotateModel: {
+        type: Function,
+        required: true,
+    },
+});
+
+const isSpeaking = ref(false);
+const statusText = ref("正在讲解文物");
+const ttsPlayer = ref<InstanceType<typeof TTSPlayer> | null>(null);
+
+const handleClick = async () => {
+    isSpeaking.value = true;
+    statusText.value = "正在讲解文物";
+    props.rotateModel();
+
+    // @ts-ignore
+    ttsPlayer.value.playAudio();
+};
+
+const onTTSEnded = () => {
+    isSpeaking.value = false;
+    statusText.value = "等待语音输入";
+};
+
+defineExpose({
+    ttsPlayer,
+});
+</script>
