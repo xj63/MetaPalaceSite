@@ -27,6 +27,7 @@ export const useArtifactStore = defineStore("artifact", {
           "https://assets.metapalace.xj63.fun/meta.json",
         );
         const artifactNames = response.data.support;
+        const releaseArtifactNames = response.data.release || []; // 确保 release 存在，否则默认为空数组
 
         const artifactPromises = artifactNames.map(async (name: string) => {
           try {
@@ -57,7 +58,16 @@ export const useArtifactStore = defineStore("artifact", {
           }
         });
 
-        this.artifacts = await Promise.all(artifactPromises);
+        const artifacts = await Promise.all(artifactPromises);
+
+        // Separate release artifacts
+        const releaseArtifacts = artifacts.filter(artifact => releaseArtifactNames.includes(artifact.name));
+
+        // Remove release artifacts from the main list
+        const remainingArtifacts = artifacts.filter(artifact => !releaseArtifactNames.includes(artifact.name));
+
+        // Combine release artifacts and remaining artifacts
+        this.artifacts = [...releaseArtifacts, ...remainingArtifacts];
       } catch (error) {
         console.error("Failed to fetch artifacts:", error);
       } finally {
