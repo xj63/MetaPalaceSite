@@ -27,12 +27,37 @@ export const useArtifactStore = defineStore("artifact", {
           "https://assets.metapalace.xj63.fun/meta.json",
         );
         const artifactNames = response.data.support;
-        this.artifacts = artifactNames.map((name: string) => ({
-          id: name,
-          name,
-          imageUrl: `https://assets.metapalace.xj63.fun/fig/${name}.png`,
-          description: "文物描述待补充", // 这里可以根据需要补充描述信息
-        }));
+
+        const artifactPromises = artifactNames.map(async (name: string) => {
+          try {
+            const descriptionResponse = await axiosInstance.get(
+              `https://assets.metapalace.xj63.fun/desc/${name}.txt`,
+              { responseType: "text" }, // Important for text files!
+            );
+            const description = descriptionResponse.data;
+
+            return {
+              id: name,
+              name,
+              imageUrl: `https://assets.metapalace.xj63.fun/fig/${name}.png`,
+              description: description,
+            };
+          } catch (descriptionError) {
+            console.warn(
+              `Failed to fetch description for ${name}:`,
+              descriptionError,
+            );
+            //Provide a default description if fetch fails
+            return {
+              id: name,
+              name,
+              imageUrl: `https://assets.metapalace.xj63.fun/fig/${name}.png`,
+              description: "文物描述待补充",
+            };
+          }
+        });
+
+        this.artifacts = await Promise.all(artifactPromises);
       } catch (error) {
         console.error("Failed to fetch artifacts:", error);
       } finally {
