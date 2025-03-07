@@ -129,7 +129,7 @@ onMounted(() => {
         controls.dampingFactor = 0.25;
         controls.screenSpacePanning = false;
         controls.minDistance = 0.5;
-        controls.maxDistance = 5;
+        controls.maxDistance = 3;
         controls.maxPolarAngle = Math.PI / 2;
 
         // 监听窗口大小变化
