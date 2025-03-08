@@ -65,7 +65,7 @@ const props = defineProps({
 const isSpeaking = ref(false);
 const statusText = ref("正在讲解文物");
 const ttsPlayer = ref<InstanceType<typeof TTSPlayer> | null>(null);
-const nextAI = ref(false);
+const nextAI = ref(true);
 
 const handleClick = async () => {
     isSpeaking.value = true;

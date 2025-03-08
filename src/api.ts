@@ -7,7 +7,7 @@ export async function aichat(
   return "hello";
   // This is todo.
 
-  const API_URL = `https://apt.metapalace.xj63.fun/aichat/${artifactName}`;
+  const API_URL = `https://api.metapalace.xj63.fun/aichat/${artifactName}`;
 
   try {
     const formData = new FormData();
