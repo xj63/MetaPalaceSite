@@ -36,12 +36,7 @@
         </span>
 
         <!-- TTS Player Component -->
-        <TTSPlayer
-            ref="ttsPlayer"
-            :text="description"
-            :autoplay="false"
-            @ended="onTTSEnded"
-        />
+        <TTSPlayer ref="ttsPlayer" @ended="onTTSEnded" />
     </button>
 </template>
 
@@ -69,8 +64,10 @@ const handleClick = async () => {
     statusText.value = "正在讲解文物";
     props.rotateModel();
 
-    // @ts-ignore
-    ttsPlayer.value.playAudio();
+    // Start playing the text using the TTSPlayer component
+    if (ttsPlayer.value) {
+        await ttsPlayer.value.playText(props.description);
+    }
 };
 
 const onTTSEnded = () => {
