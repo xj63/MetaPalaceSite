@@ -1,6 +1,7 @@
 <template>
     <button
         @click="handleClick"
+        v-if="!nextAI"
         :disabled="isSpeaking"
         :class="[
             'relative',
@@ -34,15 +35,16 @@
                 ...
             </span>
         </span>
-
-        <!-- TTS Player Component -->
-        <TTSPlayer ref="ttsPlayer" @ended="onTTSEnded" />
     </button>
+    <NextAI v-else />
+    <!-- TTS Player Component -->
+    <TTSPlayer ref="ttsPlayer" @ended="onTTSEnded" />
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
 import TTSPlayer from "@/components/TTSPlayer.vue";
+import NextAI from "@/components/NextAI.vue";
 
 const props = defineProps({
     description: {
@@ -58,6 +60,7 @@ const props = defineProps({
 const isSpeaking = ref(false);
 const statusText = ref("正在讲解文物");
 const ttsPlayer = ref<InstanceType<typeof TTSPlayer> | null>(null);
+const nextAI = ref(false);
 
 const handleClick = async () => {
     isSpeaking.value = true;
@@ -73,6 +76,11 @@ const handleClick = async () => {
 const onTTSEnded = () => {
     isSpeaking.value = false;
     statusText.value = "等待语音输入";
+
+    if ((window as any).webkitSpeechRecognition && !nextAI.value) {
+        console.log("next AI");
+        nextAI.value = true;
+    }
 };
 
 defineExpose({
