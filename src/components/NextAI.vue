@@ -52,12 +52,16 @@
 import { ref, onMounted } from "vue";
 import { aichat } from "@/api";
 import TTSPlayer from "@/components/TTSPlayer.vue";
-// import { useTTS } from "@/hooks/useTTS"; // remove useTTS
 
 const props = defineProps({
     artifactName: {
         type: String,
         required: true,
+    },
+    artifactDescription: {
+        // Add this prop definition
+        type: String,
+        required: true, // Or false if it's optional
     },
 });
 
@@ -66,9 +70,7 @@ const isProcessing = ref(false);
 const mediaRecorder = ref<MediaRecorder | null>(null);
 const audioChunks = ref<BlobPart[]>([]);
 const audioPlayer = ref<HTMLAudioElement | null>(null);
-const ttsPlayer = ref<InstanceType<typeof TTSPlayer> | null>(null); // Add ttsPlayer ref
-
-// const { playText } = useTTS(); // remove useTTS
+const ttsPlayer = ref<InstanceType<typeof TTSPlayer> | null>(null);
 
 const toggleRecord = async () => {
     if (!mediaRecorder.value) return;
@@ -97,7 +99,6 @@ const stopRecording = () => {
 };
 
 const onTTSEnded = () => {
-    // Handle TTS ended event (if needed)
     console.log("TTS playback ended");
 };
 
@@ -117,7 +118,7 @@ onMounted(async () => {
         mediaRecorder.value.onstop = async () => {
             const audioBlob = new Blob(audioChunks.value, {
                 type: "audio/webm",
-            }); // or audio/webm
+            });
             const audioFile = new File([audioBlob], "user_audio.webm", {
                 type: "audio/webm",
             });
@@ -125,17 +126,14 @@ onMounted(async () => {
             try {
                 const aiResponse = await aichat(audioFile, props.artifactName);
                 console.log("AI Response:", aiResponse);
-                // await playText(aiResponse); // Await the playback  remove useTTS
                 if (ttsPlayer.value) {
-                    await ttsPlayer.value.playText(aiResponse); // use TTSPlayer component method
+                    await ttsPlayer.value.playText(aiResponse);
                 }
             } catch (error) {
                 console.error("Error during AI chat:", error);
                 alert("与AI通信时发生错误，请重试。");
             } finally {
                 isProcessing.value = false;
-                // Optionally, restart the loop by setting isRecording to false
-                // isRecording.value = false; // Uncomment to allow another recording immediately
             }
         };
     } catch (error) {
