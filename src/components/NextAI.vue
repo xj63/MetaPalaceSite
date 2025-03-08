@@ -34,7 +34,7 @@
                 ...
             </span>
         </span>
-        <span v-else>
+        <span v-else-if="isProcessing">
             AI思考中
             <span
                 class="absolute -top-1 left-1/2 -translate-x-1/2 text-xs text-gray-200 animate-pulse"
@@ -42,6 +42,7 @@
                 ...
             </span>
         </span>
+        <span v-else>请再次按下结束录音</span>
     </button>
 
     <audio ref="audioPlayer" />
@@ -59,9 +60,8 @@ const props = defineProps({
         required: true,
     },
     artifactDescription: {
-        // Add this prop definition
         type: String,
-        required: true, // Or false if it's optional
+        required: true,
     },
 });
 
@@ -79,6 +79,8 @@ const toggleRecord = async () => {
         startRecording();
     } else {
         stopRecording();
+        isProcessing.value = true;
+        isRecording.value = true;
     }
     isRecording.value = !isRecording.value;
 };
@@ -93,13 +95,12 @@ const startRecording = async () => {
 const stopRecording = () => {
     if (mediaRecorder.value) {
         mediaRecorder.value.stop();
-        isProcessing.value = true;
-        isRecording.value = false;
     }
 };
 
 const onTTSEnded = () => {
     console.log("TTS playback ended");
+    isProcessing.value = false;
 };
 
 onMounted(async () => {
@@ -133,7 +134,7 @@ onMounted(async () => {
                 console.error("Error during AI chat:", error);
                 alert("与AI通信时发生错误，请重试。");
             } finally {
-                isProcessing.value = false;
+                audioChunks.value = [];
             }
         };
     } catch (error) {
