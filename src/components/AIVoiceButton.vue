@@ -35,10 +35,11 @@
                 ...
             </span>
         </span>
+
+        <!-- TTS Player Component -->
+        <TTSPlayer ref="ttsPlayer" @ended="onTTSEnded" />
     </button>
-    <NextAI v-else />
-    <!-- TTS Player Component -->
-    <TTSPlayer ref="ttsPlayer" @ended="onTTSEnded" />
+    <NextAI v-else :artifactName="name" :artifactDescription="description" />
 </template>
 
 <script setup lang="ts">
@@ -47,6 +48,10 @@ import TTSPlayer from "@/components/TTSPlayer.vue";
 import NextAI from "@/components/NextAI.vue";
 
 const props = defineProps({
+    name: {
+        type: String,
+        required: true,
+    },
     description: {
         type: String,
         required: true,
@@ -77,7 +82,7 @@ const onTTSEnded = () => {
     isSpeaking.value = false;
     statusText.value = "等待语音输入";
 
-    if ((window as any).webkitSpeechRecognition && !nextAI.value) {
+    if (!nextAI.value) {
         console.log("next AI");
         nextAI.value = true;
     }

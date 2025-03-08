@@ -21,6 +21,7 @@
         <!-- AI 语音交互按钮 -->
         <div class="absolute bottom-4 right-4">
             <AIVoiceButton
+                :name="artifact?.name || ''"
                 :description="artifact?.description || ''"
                 :rotateModel="rotateModel"
                 ref="aiVoiceButton"
