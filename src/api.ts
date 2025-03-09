@@ -1,13 +1,15 @@
 import axios from "axios";
 
+const SERVER = 'http://localhost:10004'
+
 export async function aichat(
   audioFile: File,
   artifactName: string,
 ): Promise<string> {
-  return "hello";
+  // return "hello";
   // This is todo.
 
-  const API_URL = `https://api.metapalace.xj63.fun/aichat/${artifactName}`;
+  const API_URL = `${SERVER}/aichat/${artifactName}`;
 
   try {
     const formData = new FormData();
@@ -23,8 +25,8 @@ export async function aichat(
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    if (response.data && response.data.text) {
-      return response.data.text;
+    if (response.data && response.data.response) {
+      return response.data.response;
     } else {
       console.warn("AI Chat API returned unexpected data:", response.data);
       return "Sorry, I could not understand. Please try again.";
@@ -32,5 +34,15 @@ export async function aichat(
   } catch (error: any) {
     console.error("Error calling AI Chat API:", error);
     return "Sorry, an error occurred. Please try again later.";
+  }
+}
+
+export async function isApiReady(): Promise<boolean> {
+  try{
+    const response = await axios.head(`${SERVER}`)
+    return response.status === 200
+  } catch (error){
+    console.warn("Error checking API readiness:")
+    return false
   }
 }

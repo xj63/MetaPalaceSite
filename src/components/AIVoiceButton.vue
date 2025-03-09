@@ -46,6 +46,7 @@
 import { ref } from "vue";
 import TTSPlayer from "@/components/TTSPlayer.vue";
 import NextAI from "@/components/NextAI.vue";
+import { isApiReady } from "@/api";
 
 const props = defineProps({
     name: {
@@ -65,7 +66,7 @@ const props = defineProps({
 const isSpeaking = ref(false);
 const statusText = ref("正在讲解文物");
 const ttsPlayer = ref<InstanceType<typeof TTSPlayer> | null>(null);
-const nextAI = ref(true);
+const nextAI = ref(false);
 
 const handleClick = async () => {
     isSpeaking.value = true;
@@ -78,11 +79,11 @@ const handleClick = async () => {
     }
 };
 
-const onTTSEnded = () => {
+const onTTSEnded = async () => {
     isSpeaking.value = false;
     statusText.value = "等待语音输入";
 
-    if (!nextAI.value) {
+    if (!nextAI.value && await isApiReady()) {
         console.log("next AI");
         nextAI.value = true;
     }
