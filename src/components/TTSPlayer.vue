@@ -15,6 +15,7 @@ const playText = async (
 ) => {
     if (!text) {
         console.warn("No text to play.");
+        onAudioEnded();
         return;
     }
 
