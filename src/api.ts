@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const SERVER = 'http://localhost:10004'
+const SERVER = "https://api.metapalace.xj63.fun";
 
 export async function aichat(
   audioFile: File,
@@ -38,11 +38,11 @@ export async function aichat(
 }
 
 export async function isApiReady(): Promise<boolean> {
-  try{
-    const response = await axios.head(`${SERVER}`)
-    return response.status === 200
-  } catch (error){
-    console.warn("Error checking API readiness:")
-    return false
+  try {
+    const response = await axios.head(`${SERVER}`);
+    return response.status === 200;
+  } catch (error) {
+    console.warn("Error checking API readiness:");
+    return false;
   }
 }
