@@ -122,7 +122,7 @@ onMounted(() => {
         // 加载模型
         const loader = new GLTFLoader();
         loader.load(
-            `https://assets.metapalace.xj63.fun/glb/${artifactId}.glb`,
+            `https://assets-metapalace.xj63.fun/glb/${artifactId}.glb`,
             (gltf) => {
                 model = gltf.scene; // 保存模型引用
                 scene.add(model);

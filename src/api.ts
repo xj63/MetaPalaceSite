@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const SERVER = "https://api.metapalace.xj63.fun";
+const SERVER = "https://api-metapalace.xj63.fun";
 
 export async function aichat(
   audioFile: File,

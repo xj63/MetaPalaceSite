@@ -24,7 +24,7 @@ export const useArtifactStore = defineStore("artifact", {
       this.loading = true;
       try {
         const response = await axiosInstance.get(
-          "https://assets.metapalace.xj63.fun/meta.json",
+          "https://assets-metapalace.xj63.fun/meta.json",
         );
         const artifactNames = response.data.support;
         const releaseArtifactNames = response.data.release || []; // 确保 release 存在，否则默认为空数组
@@ -32,7 +32,7 @@ export const useArtifactStore = defineStore("artifact", {
         const artifactPromises = artifactNames.map(async (name: string) => {
           try {
             const descriptionResponse = await axiosInstance.get(
-              `https://assets.metapalace.xj63.fun/desc/${name}.txt`,
+              `https://assets-metapalace.xj63.fun/desc/${name}.txt`,
               { responseType: "text" }, // Important for text files!
             );
             const description = descriptionResponse.data;
@@ -40,7 +40,7 @@ export const useArtifactStore = defineStore("artifact", {
             return {
               id: name,
               name,
-              imageUrl: `https://assets.metapalace.xj63.fun/fig/${name}.png`,
+              imageUrl: `https://assets-metapalace.xj63.fun/fig/${name}.png`,
               description: description,
             };
           } catch (descriptionError) {
@@ -52,7 +52,7 @@ export const useArtifactStore = defineStore("artifact", {
             return {
               id: name,
               name,
-              imageUrl: `https://assets.metapalace.xj63.fun/fig/${name}.png`,
+              imageUrl: `https://assets-metapalace.xj63.fun/fig/${name}.png`,
               description: "文物描述待补充",
             };
           }
