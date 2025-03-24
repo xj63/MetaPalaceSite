@@ -23,8 +23,9 @@ export const useArtifactStore = defineStore("artifact", {
     async fetchArtifacts() {
       this.loading = true;
       try {
-        const response = await axiosInstance.get(
+        const response = await this.fetchWithRetry(
           "https://assets-metapalace.xj63.fun/meta.json",
+          3, // 重试次数，例如 3 次
         );
         const artifactNames = response.data.support;
         const releaseArtifactNames = response.data.release || []; // 确保 release 存在，否则默认为空数组
@@ -61,10 +62,14 @@ export const useArtifactStore = defineStore("artifact", {
         const artifacts = await Promise.all(artifactPromises);
 
         // Separate release artifacts
-        const releaseArtifacts = artifacts.filter(artifact => releaseArtifactNames.includes(artifact.name));
+        const releaseArtifacts = artifacts.filter((artifact) =>
+          releaseArtifactNames.includes(artifact.name),
+        );
 
         // Remove release artifacts from the main list
-        const remainingArtifacts = artifacts.filter(artifact => !releaseArtifactNames.includes(artifact.name));
+        const remainingArtifacts = artifacts.filter(
+          (artifact) => !releaseArtifactNames.includes(artifact.name),
+        );
 
         // Combine release artifacts and remaining artifacts
         this.artifacts = [...releaseArtifacts, ...remainingArtifacts];
@@ -81,6 +86,24 @@ export const useArtifactStore = defineStore("artifact", {
 
     clearCurrentArtifact() {
       this.currentArtifact = null;
+    },
+
+    // 增加 fetchWithRetry 方法
+    async fetchWithRetry(url: string, maxRetries: number): Promise<any> {
+      let retry = 0;
+      while (retry < maxRetries) {
+        try {
+          const response = await axiosInstance.get(url);
+          return response; // 成功，返回 response
+        } catch (error: any) {
+          console.warn(`尝试获取 ${url} 失败 (第 ${retry + 1} 次)`);
+          if (retry === maxRetries - 1) {
+            throw error; // 达到最大重试次数，抛出错误
+          }
+          retry++;
+          await new Promise((resolve) => setTimeout(resolve, 1000 * retry)); // 等待一段时间后重试
+        }
+      }
     },
   },
 });
