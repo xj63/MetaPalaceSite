@@ -1,5 +1,6 @@
 <template>
     <img
+        v-if="artifact.imageUrl.length > 0"
         :src="artifact.imageUrl"
         alt="Artifact Image"
         class="w-full h-auto object-cover artifact-item"
