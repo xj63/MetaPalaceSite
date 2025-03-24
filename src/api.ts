@@ -6,9 +6,6 @@ export async function aichat(
   audioFile: File,
   artifactName: string,
 ): Promise<string> {
-  // return "hello";
-  // This is todo.
-
   const API_URL = `${SERVER}/aichat/${artifactName}`;
 
   try {
