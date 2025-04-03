@@ -1,0 +1,35 @@
+name: Auto-update Submodules Resources
+
+permissions:
+  contents: write
+  
+on:
+  schedule:
+    - cron: "0 0 * * *" # 每天凌晨 0 点运行 (UTC 时间)
+  workflow_dispatch: # 允许手动触发 workflow
+  
+
+jobs:
+  update_submodules:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Git
+        run: |
+          git config --global user.email "update-resources@workflow.github.bot"
+          git config --global user.name "update-resources"
+
+      - name: Update Submodules
+        run: |
+          git submodule update --remote --force public/resources
+          git add public/resources
+
+          if ! git diff --name-only --cached --exit-code; then
+            git commit -m "[Bot update-resources] Update submodules to latest";
+            git push
+          else
+            echo "No changes detected, skipping commit."
+          fi
