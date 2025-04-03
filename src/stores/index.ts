@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  timeout: 10000, // 设置超时时间为 10 秒
+  timeout: 3000, // 设置超时时间为 3 秒
 });
 
 export interface Artifact {
