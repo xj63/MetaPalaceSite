@@ -1,4 +1,4 @@
 [submodule "public/assets"]
-	path = public/assets
+	path = public/resources
 	url = https://github.com/Selen-Suyue/MetaPalace.git
 	branch = assets
