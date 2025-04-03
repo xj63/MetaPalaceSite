@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  timeout: 3000, // 设置超时时间为 3 秒
+  timeout: 1000, // 设置超时时间为 1 秒
 });
 
 export interface Artifact {
@@ -23,27 +23,22 @@ export const useArtifactStore = defineStore("artifact", {
     async fetchArtifacts() {
       this.loading = true;
       try {
-        const response = await this.fetchWithRetry(
-          "https://assets-metapalace.xj63.fun/meta.json",
-          3,
-        );
+        const response = await this.fetchWithRetry("/resources/meta.json", 3);
+
         const artifactNames = response.data.support;
         const releaseArtifactNames = response.data.release || [];
 
         const artifactPromises = artifactNames.map(async (name: string) => {
           try {
             const descriptionResponse = await axiosInstance.get(
-              `https://assets-metapalace.xj63.fun/desc/${name}.txt`,
+              `/resources/desc/${name}.txt`,
               { responseType: "text" },
             );
             const description = descriptionResponse.data;
 
-            // 尝试加载图像并重试
-            const imageUrl = await this.retryLoadImage(
-              `https://assets-metapalace.xj63.fun/fig/${name}.png`,
-              3, // 重试次数
-            );
+            const imageUrl = `/resources/fig/${name}.png`;
 
+            // 直接返回，不再重试加载图像
             return {
               id: name,
               name,
@@ -108,36 +103,6 @@ export const useArtifactStore = defineStore("artifact", {
           await new Promise((resolve) => setTimeout(resolve, 1000 * retry));
         }
       }
-    },
-
-    // 增加 retryLoadImage 方法
-    async retryLoadImage(url: string, maxRetries: number): Promise<string> {
-      let retry = 0;
-      while (retry < maxRetries) {
-        try {
-          // 使用 Promise 包装图像加载
-          const imageUrl = await new Promise<string>((resolve, reject) => {
-            const img = new Image();
-            img.onload = () => {
-              resolve(url); // 成功加载，返回 URL
-            };
-            img.onerror = () => {
-              reject(new Error(`Failed to load image: ${url}`)); // 加载失败，抛出错误
-            };
-            img.src = url; // 开始加载图像
-          });
-          return imageUrl; // 成功加载，返回URL
-        } catch (error: any) {
-          console.warn(`尝试加载图像 ${url} 失败 (第 ${retry + 1} 次)`);
-          if (retry === maxRetries - 1) {
-            console.warn(`加载图像 ${url} 彻底失败:`, error);
-            return ""; // 彻底失败，返回空
-          }
-          retry++;
-          await new Promise((resolve) => setTimeout(resolve, 1000 * retry)); // 等待一段时间后重试
-        }
-      }
-      return "path/to/default_image.png"; // 如果循环结束还没有成功，返回默认图片
     },
   },
 });
