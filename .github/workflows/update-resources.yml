@@ -24,7 +24,7 @@ jobs:
 
       - name: Update Submodules
         run: |
-          git submodule update --remote --force public/resources
+          git submodule update --remote --init --force public/resources
           git add public/resources
 
           if ! git diff --name-only --cached --exit-code; then
