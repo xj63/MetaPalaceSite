@@ -17,6 +17,12 @@ const routes: RouteRecordRaw[] = [
     name: "detail",
     component: () => import("@/views/DetailView.vue"),
   },
+  {
+    path: "/404",
+    name: "404",
+    component: () => import("@/views/NotFound.vue"),
+  },
+  { path: "/:pathMatch(.*)*", redirect: "/404" },
 ];
 
 const router = createRouter({
