@@ -1,14 +1,21 @@
 <template>
-    <img
-        v-if="artifact.imageUrl.length > 0"
-        :src="artifact.imageUrl"
-        alt="Artifact Image"
-        class="w-full h-auto object-cover artifact-item"
-        draggable="true"
-        loading="lazy"
-        @dragstart="onDragStart"
-        @click="viewArtifact"
-    />
+    <div class="group overflow-hidden">
+        <img
+            v-if="artifact.imageUrl.length > 0"
+            :src="artifact.imageUrl"
+            alt="Artifact Image"
+            class="w-full h-auto object-cover group-hover:scale-125 duration-200"
+            draggable="true"
+            loading="lazy"
+            @dragstart="onDragStart"
+            @click="viewArtifact"
+        />
+        <div
+            class="absolute bottom-0 left-0 w-full bg-white/40 dark:bg-black/40 backdrop-blur-md p-4 text-sm text-gray-800 dark:text-gray-200 transform translate-y-full group-hover:translate-y-0 transition-transform duration-200 ease-in-out"
+        >
+            {{ artifact.description }}
+        </div>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -29,14 +36,3 @@ const viewArtifact = () => {
     emits("click", props.artifact);
 };
 </script>
-
-<style scoped>
-.artifact-item {
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.artifact-item:hover {
-    transform: scale(1.02);
-}
-</style>
