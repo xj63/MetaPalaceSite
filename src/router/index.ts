@@ -1,16 +1,18 @@
 import { createRouter, createWebHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
+import HomeView from "@/views/HomeView.vue";
+import SelectView from "@/views/SelectView.vue";
 
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
     name: "home",
-    component: () => import("@/views/HomeView.vue"),
+    component: HomeView,
   },
   {
     path: "/select",
     name: "select",
-    component: () => import("@/views/SelectView.vue"),
+    component: SelectView,
   },
   {
     path: "/detail/:id",
