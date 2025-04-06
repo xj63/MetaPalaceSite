@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import HomeOne from "@/components/home/HomeOne.vue";
+import HomeTwo from "@/components/home/HomeTwo.vue";
 import { ScrollIsland } from "@/components/ui/scroll-island";
 </script>
 
@@ -14,6 +15,8 @@ import { ScrollIsland } from "@/components/ui/scroll-island";
         <div class="snap-start h-screen" id="one">
             <HomeOne></HomeOne>
         </div>
-        <div class="snap-start h-screen" id="two"></div>
+        <div class="snap-start h-screen" id="two">
+            <HomeTwo></HomeTwo>
+        </div>
     </div>
 </template>
