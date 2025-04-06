@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@number-flow/vue": "^0.4.7",
     "@vueuse/core": "^12.8.2",
     "axios": "^1.8.4",
     "class-variance-authority": "^0.7.1",
