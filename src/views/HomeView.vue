@@ -5,7 +5,7 @@ import { ScrollIsland } from "@/components/ui/scroll-island";
 
 <template>
     <div id="home" class="h-screen overflow-y-scroll snap-y">
-        <ScrollIsland title="Scroll Island">
+        <ScrollIsland title="Meta Palace">
             <div class="my-3 flex flex-col gap-2">
                 <a href="#one"># One</a>
                 <a href="#two"># Two</a>
