@@ -1,26 +1,22 @@
-<script setup lang="ts">
-import HomeOne from "@/components/home/HomeOne.vue";
-import HomeTwo from "@/components/home/HomeTwo.vue";
-import HomeThree from "@/components/home/HomeThree.vue";
-import { ScrollIsland } from "@/components/ui/scroll-island";
-</script>
-
 <template>
-    <div id="home" class="h-screen overflow-y-scroll snap-y">
-        <ScrollIsland title="Meta Palace">
-            <div class="my-3 flex flex-col gap-2">
-                <a href="#one"># One</a>
-                <a href="#two"># Two</a>
-            </div>
-        </ScrollIsland>
-        <div class="snap-start h-screen" id="one">
-            <HomeOne></HomeOne>
+    <div class="h-screen bg-red-300">
+        <div class="flex pt-10">
+            <p
+                class="mx-auto bg-gray-800/30 text-gray-200 p-4 rounded-lg shadow-lg backdrop-blur-md text-6xl"
+            >
+                MetaPalace
+            </p>
         </div>
-        <div class="snap-start h-screen" id="two">
-            <HomeTwo></HomeTwo>
-        </div>
-        <div class="snap-start h-screen" id="three">
-            <HomeThree></HomeThree>
-        </div>
+        <div
+            class="flex items-center justify-center h-full text-white font-bold bg-cover bg-center"
+            style="background-image: url(&quot;/metapalace2.jpg&quot;)"
+        ></div>
     </div>
 </template>
+
+<style scoped>
+div.relative {
+    /* 注意，这里指定了选择器为 div.relative，以确保只应用于该容器 */
+    transform: translateY(20px); /* 向下偏移 20px，根据需要调整 */
+}
+</style>

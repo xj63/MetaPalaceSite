@@ -10,6 +10,11 @@ const routes: RouteRecordRaw[] = [
     component: HomeView,
   },
   {
+    path: "/next",
+    name: "next",
+    component: () => import("@/views/NextView.vue"),
+  },
+  {
     path: "/select",
     name: "select",
     component: SelectView,
