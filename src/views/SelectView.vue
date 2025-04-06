@@ -2,7 +2,7 @@
     <div class="flex min-h-screen dark:text-gray-200">
         <!-- 左侧区域 -->
         <div
-            class="w-1/3 hidden lg:block bg-gray-100 dark:bg-gray-800 p-4 h-screen overflow-y-auto"
+            class="w-1/3 hidden lg:block bg-gray-100 dark:bg-gray-950 p-4 h-screen overflow-y-auto"
         >
             <ArtifactDetail :artifact="currentArtifact" />
         </div>
