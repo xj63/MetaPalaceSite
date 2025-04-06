@@ -51,6 +51,7 @@ type ParticleImageProps = {
 
 defineProps<ParticleImageProps>();
 
+// @ts-expect-error TS6133
 let particles: ImageParticle;
 const imageParticleRef = ref<HTMLImageElement>();
 
