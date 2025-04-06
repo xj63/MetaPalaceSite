@@ -3,6 +3,7 @@ import { createPinia } from "pinia";
 import router from "./router";
 
 import "./style.css";
+import "./theme";
 
 import App from "@/App.vue";
 import { useArtifactStore } from "@/stores";
