@@ -1,22 +1,38 @@
+<script setup lang="ts">
+import { useRouter } from "vue-router";
+import BackgroundEffect from "@/components/BackgroundEffect.vue";
+
+const router = useRouter();
+const navigateToSelect = () => router.push("/select");
+</script>
+
 <template>
-    <div class="h-screen bg-red-300">
-        <div class="flex pt-10">
-            <p
-                class="mx-auto bg-gray-800/30 text-gray-200 p-4 rounded-lg shadow-lg backdrop-blur-md text-6xl"
+    <div
+        @click="navigateToSelect"
+        class="relative min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-violet-600 to-purple-700 dark:from-violet-800 dark:to-purple-900 cursor-pointer overflow-hidden"
+    >
+        <BackgroundEffect />
+
+        <div class="relative z-10 text-center space-y-8">
+            <h1
+                class="text-5xl md:text-7xl font-bold text-white tracking-wider"
             >
                 MetaPalace
-            </p>
+            </h1>
+
+            <div class="space-y-4">
+                <div class="h-px w-24 md:w-32 mx-auto bg-white/30" />
+                <p class="text-lg md:text-xl text-white/90">
+                    探索文物的数字世界
+                </p>
+            </div>
         </div>
-        <div
-            class="flex items-center justify-center h-full text-white font-bold bg-cover bg-center"
-            style="background-image: url(&quot;/metapalace2.jpg&quot;)"
-        ></div>
+
+        <p
+            class="absolute bottom-12 text-white/70 text-sm md:text-base animate-bounce"
+        >
+            点击任意位置进入
+        </p>
     </div>
 </template>
 
-<style scoped>
-div.relative {
-    /* 注意，这里指定了选择器为 div.relative，以确保只应用于该容器 */
-    transform: translateY(20px); /* 向下偏移 20px，根据需要调整 */
-}
-</style>
