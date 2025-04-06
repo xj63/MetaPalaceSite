@@ -28,7 +28,7 @@
                     class="rounded-xl px-4 py-2 text-xs font-normal dark:text-white"
                 >
                     <button class="cursor-copy" @click.stop="copyName">
-                        Copy Name
+                        {{ copyNameOk ? "Copy Success!" : "Copy Name" }}
                     </button>
                 </CardItem>
 
@@ -45,6 +45,7 @@
 import { CardContainer, CardBody, CardItem } from "@/components/ui/card-3d";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 import { useRouter } from "vue-router";
+import { ref } from "vue";
 
 const props = defineProps({
     artifact: {
@@ -58,9 +59,14 @@ function navigateToDetail() {
     router.push(`/detail/${props.artifact?.id}`);
 }
 
+const copyNameOk = ref(false);
 function copyName() {
     let artifact = props.artifact;
     if (!artifact) return;
     navigator.clipboard.writeText(artifact.name);
+    copyNameOk.value = true;
+    setTimeout(() => {
+        copyNameOk.value = false;
+    }, 2000);
 }
 </script>
