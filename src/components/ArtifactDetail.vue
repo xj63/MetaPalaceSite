@@ -1,5 +1,5 @@
 <template>
-    <CardContainer>
+    <CardContainer @click="navigateToDetail" class="cursor-pointer">
         <CardBody
             class="group/card relative size-auto rounded-xl border border-black/[0.1] bg-gray-50 p-6 sm:w-[30rem] dark:border-white/[0.2] dark:bg-black dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1]"
         >
@@ -56,8 +56,7 @@ const props = defineProps({
 });
 
 const router = useRouter();
-
-const navigateToDetail = () => {
+function navigateToDetail() {
     router.push(`/detail/${props.artifact?.id}`);
-};
+}
 </script>
