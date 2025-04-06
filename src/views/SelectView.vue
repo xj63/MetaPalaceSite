@@ -17,8 +17,8 @@
                         @click="viewArtifact"
                     />
                 </template>
-                <UploadButton @upload="handleUpload" />
             </wc-waterfall>
+            <UploadButton @upload="handleUpload" />
         </div>
     </div>
 </template>
