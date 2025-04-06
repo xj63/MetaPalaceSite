@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex h-full flex-col items-center justify-center overflow-hidden rounded-md bg-white dark:bg-black cursor-pointer"
+        class="flex relative h-full flex-col items-center justify-center overflow-hidden rounded-md bg-white dark:bg-black cursor-pointer"
         @click="navigateToSelect"
     >
         <h1
