@@ -53,6 +53,7 @@ const updateCols = () => {
 };
 
 onMounted(() => {
+    artifactStore.setCurrentArtifact(artifactStore.artifacts[0]);
     updateCols();
     window.addEventListener("resize", updateCols);
 });
