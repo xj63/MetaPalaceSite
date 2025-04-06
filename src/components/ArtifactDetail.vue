@@ -5,7 +5,7 @@
         >
             <CardItem
                 :translate-z="50"
-                class="text-xl font-bold text-neutral-600 dark:text-white"
+                class="text-xl font-bold text-neutral-600 dark:text-white mt-2"
             >
                 {{ artifact ? artifact.name : "拖拽文物到此处查看详情" }}
             </CardItem>
@@ -16,7 +16,7 @@
             >
                 {{ artifact?.description }}
             </CardItem>
-            <CardItem :translate-z="100" class="mt-4 w-full">
+            <CardItem :translate-z="100" class="mt-8 w-full">
                 <img
                     :src="artifact?.imageUrl"
                     class="w-full h-auto rounded-xl group-hover/card:shadow-xl"
@@ -25,19 +25,16 @@
             <div class="mt-20 flex items-center justify-between">
                 <CardItem
                     :translate-z="20"
-                    as="a"
-                    href="https://rahulv.dev"
-                    target="__blank"
                     class="rounded-xl px-4 py-2 text-xs font-normal dark:text-white"
                 >
-                    Visit →
+                    <button class="cursor-copy" @click.stop="copyName">
+                        Copy Name
+                    </button>
                 </CardItem>
-                <CardItem
-                    :translate-z="20"
-                    as="button"
-                    class="rounded-xl bg-black px-4 py-2 text-xs font-bold text-white dark:bg-white dark:text-black"
-                >
-                    Get Started
+
+                <CardItem :translate-z="20">
+                    <InteractiveHoverButton text="Visit">
+                    </InteractiveHoverButton>
                 </CardItem>
             </div>
         </CardBody>
@@ -46,6 +43,7 @@
 
 <script setup lang="ts">
 import { CardContainer, CardBody, CardItem } from "@/components/ui/card-3d";
+import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 import { useRouter } from "vue-router";
 
 const props = defineProps({
@@ -58,5 +56,11 @@ const props = defineProps({
 const router = useRouter();
 function navigateToDetail() {
     router.push(`/detail/${props.artifact?.id}`);
+}
+
+function copyName() {
+    let artifact = props.artifact;
+    if (!artifact) return;
+    navigator.clipboard.writeText(artifact.name);
 }
 </script>
