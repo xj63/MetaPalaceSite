@@ -2,16 +2,16 @@
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
         <!-- 主背景动画 -->
         <div
-            class="absolute inset-0 bg-gradient-to-r from-violet-500/20 to-purple-500/20 animate-pulse"
+            class="absolute inset-0 bg-gradient-to-r from-red-500/20 to-pink-500/20 animate-pulse"
         />
 
         <!-- 光晕效果 -->
         <div class="absolute inset-0">
             <div
-                class="absolute -top-1/4 -left-1/4 w-2/3 h-2/3 bg-violet-400/20 rounded-full blur-3xl animate-blob"
+                class="absolute -top-1/4 -left-1/4 w-2/3 h-2/3 bg-red-400/20 rounded-full blur-3xl animate-blob"
             />
             <div
-                class="absolute -bottom-1/4 -right-1/4 w-2/3 h-2/3 bg-purple-400/20 rounded-full blur-3xl animate-blob delay-2000"
+                class="absolute -bottom-1/4 -right-1/4 w-2/3 h-2/3 bg-pink-400/20 rounded-full blur-3xl animate-blob delay-2000"
             />
         </div>
 

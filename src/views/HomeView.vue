@@ -13,7 +13,14 @@ const navigateToSelect = () => router.push("/select");
     >
         <BackgroundEffect />
 
-        <div class="relative z-10 text-center space-y-8">
+        <img
+            src="/metapalace.jpg"
+            alt="Transparent Overlay"
+            class="absolute top-0 left-0 w-full h-full object-cover opacity-50 translate-y-1/6"
+            style="pointer-events: none"
+        />
+
+        <div class="relative z-10 text-center space-y-8 -translate-y-28">
             <h1
                 class="text-5xl md:text-7xl font-bold text-white tracking-wider"
             >
@@ -35,4 +42,3 @@ const navigateToSelect = () => router.push("/select");
         </p>
     </div>
 </template>
-
