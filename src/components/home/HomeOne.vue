@@ -49,11 +49,15 @@ import { computed } from "vue";
 import { useColorMode } from "@vueuse/core";
 import { Sparkles } from "@/components/ui/sparkles";
 import { useRouter } from "vue-router";
+import { ref, onMounted } from "vue";
 
 const router = useRouter();
 const navigateToSelect = () => router.push("/select");
 
-const particlesColor = computed(() =>
-    useColorMode().value === "dark" ? "#FFFFFF" : "#000000",
-);
+const isDark = ref(false);
+onMounted(() => {
+    isDark.value = useColorMode().value === "dark";
+});
+
+const particlesColor = computed(() => (isDark.value ? "#FFFFFF" : "#000000"));
 </script>
