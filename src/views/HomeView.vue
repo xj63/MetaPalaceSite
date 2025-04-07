@@ -9,14 +9,14 @@ const navigateToSelect = () => router.push("/select");
 <template>
     <div
         @click="navigateToSelect"
-        class="relative min-h-screen flex flex-col items-center justify-center cursor-pointer overflow-hidden"
+        class="relative min-h-screen flex flex-col items-center justify-center cursor-pointer overflow-hidden bg-black"
     >
         <BackgroundEffect />
 
         <img
             src="/metapalace4.jpg"
             alt="Transparent Overlay"
-            class="absolute bottom-0 w-2/3 object-cover opacity-50"
+            class="absolute bottom-0 w-2/3 object-cover"
             style="pointer-events: none"
         />
 
