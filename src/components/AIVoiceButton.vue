@@ -26,7 +26,7 @@
             isSpeaking ? 'opacity-75 cursor-not-allowed' : '',
         ]"
     >
-        <span v-if="!isSpeaking">AI</span>
+        <span v-if="!isSpeaking">AI语音讲解</span>
         <span v-else>
             {{ statusText }}
             <span
@@ -83,7 +83,7 @@ const onTTSEnded = async () => {
     isSpeaking.value = false;
     statusText.value = "等待语音输入";
 
-    if (!nextAI.value && await isApiReady()) {
+    if (!nextAI.value && (await isApiReady())) {
         console.log("next AI");
         nextAI.value = true;
     }
