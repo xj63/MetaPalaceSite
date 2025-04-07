@@ -9,18 +9,18 @@ const navigateToSelect = () => router.push("/select");
 <template>
     <div
         @click="navigateToSelect"
-        class="relative min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-violet-600 to-purple-700 dark:from-violet-800 dark:to-purple-900 cursor-pointer overflow-hidden"
+        class="relative min-h-screen flex flex-col items-center justify-center cursor-pointer overflow-hidden"
     >
         <BackgroundEffect />
 
         <img
-            src="/metapalace.jpg"
+            src="/metapalace4.jpg"
             alt="Transparent Overlay"
-            class="absolute top-0 left-0 w-full h-full object-cover opacity-50 translate-y-1/6"
+            class="absolute bottom-0 w-2/3 object-cover opacity-50"
             style="pointer-events: none"
         />
 
-        <div class="relative z-10 text-center space-y-8 -translate-y-28">
+        <div class="relative z-10 text-center space-y-8">
             <h1
                 class="text-5xl md:text-7xl font-bold text-white tracking-wider"
             >
@@ -29,7 +29,7 @@ const navigateToSelect = () => router.push("/select");
 
             <div class="space-y-4">
                 <div class="h-px w-24 md:w-32 mx-auto bg-white/30" />
-                <p class="text-lg md:text-xl text-white/90">
+                <p class="text-lg md:text-2xl text-white/90">
                     探索文物的数字世界
                 </p>
             </div>
