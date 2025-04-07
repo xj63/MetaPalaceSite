@@ -16,7 +16,7 @@ const navigateToSelect = () => router.push("/select");
         <img
             src="/metapalace4.jpg"
             alt="Transparent Overlay"
-            class="absolute bottom-0 w-2/3 object-cover"
+            class="absolute bottom-0 w-2/3 object-cover max-w-5xl"
             style="pointer-events: none"
         />
 
