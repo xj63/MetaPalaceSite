@@ -20,7 +20,7 @@ const navigateToSelect = () => router.push("/select");
             style="pointer-events: none"
         />
 
-        <div class="relative z-10 text-center space-y-8">
+        <div class="relative z-10 text-center space-y-8 -translate-y-2/3">
             <h1
                 class="text-5xl md:text-7xl font-bold text-white tracking-wider"
             >
