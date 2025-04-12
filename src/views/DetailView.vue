@@ -11,6 +11,30 @@
         >
             加载中...
         </div>
+
+        <!-- 返回按钮 -->
+        <div class="absolute top-4 left-4 z-10">
+            <button
+                @click="router.back()"
+                class="flex items-center justify-center w-10 h-10 rounded-full backdrop-blur-sm text-white hover:bg-white/20 transition-colors hover:scale-110"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+                    />
+                </svg>
+            </button>
+        </div>
+
         <div
             class="absolute bottom-0 left-0 right-0 p-4 bg-black/30 backdrop-blur-sm text-white"
         >
