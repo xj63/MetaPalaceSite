@@ -5,4 +5,4 @@ MetaPalaceSite 是一个基于 Vue.js 的单页应用（SPA），旨在通过 AI
 
 ## Links
 
-[Selen-Suyue/MetaPalace](https://github.com/Selen-Suyue/MetaPalace)
+**主仓库**：[Selen-Suyue/MetaPalace](https://github.com/Selen-Suyue/MetaPalace)
